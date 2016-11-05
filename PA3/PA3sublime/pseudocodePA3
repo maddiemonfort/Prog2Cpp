@@ -1,0 +1,49 @@
+Main:
+	take in expression
+
+	parse expression into queue of tokens. CHECK
+
+	take queue of tokens and run shunting-yard algorithm.  return new expression-queue.
+
+	take new expression and run the solving thing-- output is a number.
+
+	return number.
+
+
+Parse:
+	get a string expression... with spaces and nonsense CHECK
+	separate tokens by spaces, numbers-> check length, and operators (+,-,*,/,^) CHECK
+	check if letters-> want only sin, cos, log, sqrt CHECK
+		L> everything else will send an error 
+
+Shunting-Yard Alg:
+	take in queue. CHECK
+	use stacks and queue CHECK
+	use online pseudocode CHECK
+	return new queue expression CHECK 
+	
+Calculate:
+	take in queue of tokens (ordered)
+	do math(call math functions) in specific (RPN- online pseudocode) order
+	return number
+
+	Each takes in two numbers and a char operator... three chars? and outputs an int/double/float...idk
+	Add:
+	
+	Sub:
+
+	Mult:
+
+	Div:
+
+	Pow:
+
+	Sin:
+
+	Cos:
+
+	Log:
+
+	Sqrt:
+
+

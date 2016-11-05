@@ -1,0 +1,164 @@
+#ifndef SnakeClass_h
+#define SnakeClass_h
+
+#include "SnakeLL.h"
+#include "math.h"
+
+double randomNum() {
+
+	int i = rand() % 100;
+	while((i % 4) != 0) {
+		i = rand() % 100;
+	}
+
+	return i;
+}
+
+int randomNeg() {
+	return (rand() % 2);
+}
+
+float randomize() {
+	float f = (float)(randomNum() / 100 * pow(-1, randomNeg()));
+	return f;
+}
+
+class Segment{
+private:
+    float x;
+    float y;
+    
+public:
+    Segment(float x, float y){
+        this->x = x;
+        this->y = y;
+    }
+
+    /*void move(float distance, bool up){
+        if (up){
+            this->y += distance;
+        }
+        else if (!up){
+            this->x += distance;
+        }
+    }*/
+
+    float getX(){
+        return x;
+    }
+
+    float getY(){
+        return y;
+    }
+};
+
+class Food{
+private:
+    float x;
+    float y;
+    Segment* food;
+    Segment* temp;
+    float* xArr;
+    float* yArr;
+    
+public:
+    Food(float x, float y){
+        food = new Segment(x, y);
+    
+    }
+    
+    ~Food() {
+        delete food;
+    }
+    
+    float getX(){
+        return food->getX();
+    }
+
+    float getY(){
+        return food->getY();
+    }
+    
+    //changed
+    void move() {
+        x = food->getX();
+        y = food->getY();
+        delete food;
+        std::cout << randomize() << std::endl;
+        food = new Segment(randomize(), randomize());
+    }
+};
+
+class Snake{
+private:
+    float headx;
+    float heady;
+    LL<Segment*>* snake;
+    int length;
+    bool isEaten;
+    
+    
+public:
+    Snake(){
+        headx = 0.0f;
+        heady = 0.0f;
+        snake = new LL<Segment*>();
+
+        /*Segment* head = new Segment(headx, heady);
+        snake->insert(0, head);
+        snake->insert(1, new Segment(headx - 0.04f, heady));
+        snake->insert(2, new Segment(headx - 0.08f, heady));*/
+
+        for(int i = 0; i < 10; i++) {
+            snake->insert(i, new Segment(headx - (i* 0.04f), heady));
+        }
+    }
+    
+    float getX(){
+        return snake->item_at(0)->getX();
+    }
+
+    float getY(){
+        return snake->item_at(0)->getY();
+    }
+
+    float getXLoc(int position){
+        return snake->item_at(position)->getX();
+    }
+
+    float getYLoc(int position){
+        return snake->item_at(position)->getY();
+    }
+    
+    void eatTrue() {
+    	isEaten = true;
+    }
+    
+    void eatFalse() {
+    	isEaten = false;
+    }
+
+    void snakeMove(float distance, bool up){
+        if (up){
+            heady += distance;
+            /*for (int i = 0; i<snake->size(); i++) {
+                snake->itemAt(i)->move(distance, up);
+            }*/
+        }
+        else if (!up){
+            headx += distance;
+            /*for (int i = 0; i<snake->size(); i++) {
+                snake->itemAt(i)->move(distance, up);
+            }*/
+        }
+        Segment* newHead = new Segment(headx, heady);
+        snake->move(newHead, isEaten); //false - bool isEaten
+
+    }
+
+    int getLength() {
+        return snake->size();
+    }
+};
+
+#endif

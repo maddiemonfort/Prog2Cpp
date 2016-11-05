@@ -1,0 +1,84 @@
+//
+//  square.h
+//  snake
+//
+//  Created by Sarah Garcia on 11/11/14.
+//  Copyright (c) 2014 Sarah Garcia. All rights reserved.
+//
+
+#ifndef snake_square_h
+#define snake_square_h
+
+
+
+
+
+class Square{
+    
+    
+public:
+    Square() { //constructor
+        
+    }
+
+    /*static void clearScreen() {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glutSwapBuffers();
+    }
+    
+    static void drawSquare(float s, float x, float y){
+        
+        glBegin(GL_POLYGON);
+        glColor3f(0.5,0.0,0.5);
+        glVertex3f(x+(s/2),y+(s/2),-3.0);
+        glColor3f(1.0,0.0,0.0);
+        glVertex3f(x-(s/2),y+(s/2),-3.0);
+        glColor3f(0.0,0.0,1.0);
+        glVertex3f(x-(s/2),y-(s/2),-3.0);
+        glColor3f(0.0,1.0,0.0);
+        glVertex3f(x+(s/2),y-(s/2),-3.0);
+        glEnd();
+        
+    }*/
+    
+   /*static void display(void){
+        glClear(GL_COLOR_BUFFER_BIT);
+        drawSquare (.04f, 0.0f, 0.0f);
+        glutSwapBuffers();
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        drawSquare(.04f, 0.5f, -0.5f);
+        glutSwapBuffers();
+        //Finish rendering
+    }*/
+    
+    static void reshape(int x, int y){
+        if (y == 0 || x == 0) return;  //Nothing is visible then, so return
+        //Set a new projection matrix
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        //Angle of view:40 degrees
+        //Near clipping plane distance: 0.5
+        //Far clipping plane distance: 20.0
+        gluPerspective(30.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
+        glMatrixMode(GL_MODELVIEW);
+        glViewport(0,0,x,y);  //Use the whole window for rendering
+    }
+    
+    void createWindow(){
+        //Initialize GLUT
+        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+        Wsize = 1500;
+        glutInitWindowSize(Wsize,Wsize);
+        //Create a window with rendering context and everything else we need
+        glutCreateWindow("Snake");
+        glClearColor(0.0,0.0,0.0,0.0);
+    }
+    
+    
+private:
+    int Wsize;
+    
+};
+
+#endif
